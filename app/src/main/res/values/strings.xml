@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Volts Driver</string>
+    <string name="offers_service_label">Volts Driver – Leitura de ofertas</string>
+    <string name="offers_service_description">Lê o valor, a distância e o tempo das ofertas de corrida exibidas pelos apps de transporte que você escolheu, para montar o relatório de desempenho. Apenas esses números são guardados, e somente neste aparelho.</string>
+</resources>
