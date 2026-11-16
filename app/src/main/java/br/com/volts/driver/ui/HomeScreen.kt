@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -67,7 +68,7 @@ import br.com.volts.driver.util.formatKm
 import kotlinx.coroutines.delay
 
 @Composable
-fun HomeScreen(showLogo: Boolean) {
+fun HomeScreen(wide: Boolean) {
     val context = LocalContext.current
     val app = app()
     val settings by app.prefs.settings.collectAsStateWithLifecycle()
@@ -87,9 +88,10 @@ fun HomeScreen(showLogo: Boolean) {
         }
     }
 
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         // Em telas largas o símbolo já aparece na barra lateral.
-        if (showLogo) Image(painterResource(R.drawable.volts_logo), "Volts Brasil", Modifier.height(36.dp))
+        if (!wide) Image(painterResource(R.drawable.volts_logo), "Volts Brasil", Modifier.height(36.dp))
         ShiftCard()
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Seus apps", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
@@ -101,7 +103,7 @@ fun HomeScreen(showLogo: Boolean) {
             OutlinedButton(onClick = { allApps = true }) { Text("Outros apps") }
         }
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(150.dp),
+            columns = GridCells.Adaptive(140.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize(),
@@ -110,6 +112,9 @@ fun HomeScreen(showLogo: Boolean) {
                 AppTile(pkg, byPkg[pkg], loading = installed == null)
             }
         }
+    }
+    // Mapa ao vivo fixo no canto do painel (só cabe em telas largas).
+    if (wide) MiniMap(Modifier.weight(0.6f).fillMaxHeight())
     }
 }
 
@@ -134,10 +139,19 @@ private fun AppTile(pkg: String, entry: AppEntry?, loading: Boolean) {
                 )
                 .padding(12.dp),
         ) {
-            if (entry != null) {
-                Image(entry.icon, null, Modifier.size(64.dp))
-            } else {
-                Icon(Icons.Filled.Download, null, Modifier.size(64.dp).alpha(0.4f))
+            val known = KnownApps.get(pkg)
+            when {
+                // Apps conhecidos usam o logo embutido, instalados ou não.
+                known != null -> Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .alpha(if (entry == null && !loading) 0.45f else 1f)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(known.bg),
+                ) { Icon(painterResource(known.logo), null, Modifier.size(44.dp), tint = known.fg) }
+                entry != null -> Image(entry.icon, null, Modifier.size(64.dp))
+                else -> Icon(Icons.Filled.Download, null, Modifier.size(64.dp).alpha(0.4f))
             }
             Spacer(Modifier.height(8.dp))
             Text(

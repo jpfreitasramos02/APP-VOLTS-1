@@ -57,7 +57,7 @@ fun VoltsRoot() {
             val content: @Composable (Modifier, Boolean) -> Unit = { m, wide ->
                 Box(m.padding(16.dp)) {
                     when (tab) {
-                        0 -> HomeScreen(showLogo = !wide)
+                        0 -> HomeScreen(wide)
                         1 -> StationsScreen()
                         2 -> PayScreen(onOpenSettings = { tab = 4 })
                         3 -> ReportScreen()

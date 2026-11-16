@@ -7,7 +7,7 @@ O app pode ser definido como **tela inicial** do tablet, que passa a ligar diret
 
 | Aba | Função |
 | --- | --- |
-| **Painel** | Atalhos grandes para Uber Driver, 99 Motorista, inDrive, Waze e Google Maps (e qualquer outro app que você fixar). "Abrir todos" inicia todos de uma vez; toque longo abre em tela dividida. Botão de iniciar/encerrar turno com km e tempo ao vivo. |
+| **Painel** | Atalhos grandes para Uber Driver, 99 Motorista, inDrive, Waze e Google Maps (e qualquer outro app que você fixar). "Abrir todos" inicia todos de uma vez; toque longo abre em tela dividida. Botão de iniciar/encerrar turno com km e tempo ao vivo. Mapa ao vivo com a posição do carro fixo no canto, com botão para abrir a navegação no Waze/Maps. |
 | **Postos** | Mapa e lista de postos de combustível e eletropostos próximos (dados do OpenStreetMap), com eletropostos da rede Volts em destaque e botão para navegar pelo Waze/Maps. |
 | **Cobrar** | Teclado de valor e três formas de receber: Pix (gera QR Code e Copia e Cola da sua chave), aproximação/NFC (abre o app Tap to Pay da sua adquirente) e dinheiro. |
 | **Relatório** | Km rodados, tempo online, valor recebido e, por app, quantas ofertas chegaram, valor médio, média por km e total ofertado — hoje, 7 ou 30 dias. |
@@ -54,3 +54,8 @@ O APK sai em `app/build/outputs/apk/debug/app-debug.apk`.
 
 A identidade visual (cores, logo e as fontes Sora e IBM Plex Mono, ambas sob licença SIL OFL 1.1) segue a do site da Volts Brasil;
 os valores ficam em `ui/Theme.kt`.
+
+Os logos dos apps no Painel (`res/drawable/logo_*.xml`) vêm do projeto [Arcticons](https://github.com/Arcticons-Team/Arcticons),
+licença CC BY-SA 4.0, convertidos para vetor Android. As marcas pertencem aos respectivos donos.
+Os mapas usam dados e imagens © colaboradores do OpenStreetMap; para uso em produção é preciso contratar um
+servidor de mapas próprio, pois o servidor público do OpenStreetMap não permite uso intenso por aplicativos.

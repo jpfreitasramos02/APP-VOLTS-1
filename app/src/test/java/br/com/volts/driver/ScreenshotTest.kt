@@ -1,9 +1,13 @@
 package br.com.volts.driver
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
 import android.content.pm.ResolveInfo
+import android.location.Location
+import android.location.LocationManager
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -48,6 +52,12 @@ class ScreenshotTest {
                 }
             })
         }
+        // Posição de exemplo (Av. Paulista) para o mapa do painel.
+        shadowOf(app).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val lm = app.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        shadowOf(lm).setLastKnownLocation(LocationManager.GPS_PROVIDER, Location(LocationManager.GPS_PROVIDER).apply {
+            latitude = -23.5614; longitude = -46.6559; accuracy = 5f; time = System.currentTimeMillis()
+        })
         val now = System.currentTimeMillis()
         runBlocking {
             app.dao.insertShift(Shift(startTime = now - 5 * 3_600_000L, endTime = now - 60_000, distanceMeters = 142_300.0))

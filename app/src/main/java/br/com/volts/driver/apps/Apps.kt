@@ -4,32 +4,37 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import br.com.volts.driver.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class KnownApp(val pkg: String, val label: String, val ride: Boolean)
+/** [logo] é desenhado em [fg] sobre um quadro na cor [bg] do app. */
+class KnownApp(val pkg: String, val label: String, val ride: Boolean, @DrawableRes val logo: Int, val bg: Color, val fg: Color)
 
 /** Apps que já vêm fixados no painel. O motorista pode fixar qualquer outro em Ajustes. */
 object KnownApps {
     val all = listOf(
-        KnownApp("com.ubercab.driver", "Uber Driver", ride = true),
-        KnownApp("com.app99.driver", "99 Motorista", ride = true),
-        KnownApp("sinet.startup.inDriver", "inDrive", ride = true),
-        KnownApp("com.waze", "Waze", ride = false),
-        KnownApp("com.google.android.apps.maps", "Google Maps", ride = false),
+        KnownApp("com.ubercab.driver", "Uber Driver", ride = true, R.drawable.logo_uber_driver, Color.Black, Color.White),
+        KnownApp("com.app99.driver", "99 Motorista", ride = true, R.drawable.logo_99, Color(0xFFFFDD00), Color.Black),
+        KnownApp("sinet.startup.inDriver", "inDrive", ride = true, R.drawable.logo_indrive, Color(0xFFC1F11D), Color.Black),
+        KnownApp("com.waze", "Waze", ride = false, R.drawable.logo_waze, Color(0xFF33CCFF), Color.Black),
+        KnownApp("com.google.android.apps.maps", "Google Maps", ride = false, R.drawable.logo_google_maps, Color.White, Color(0xFF1A73E8)),
     )
     private val byPkg = all.associateBy { it.pkg }
+    fun get(pkg: String): KnownApp? = byPkg[pkg]
     fun label(pkg: String): String? = byPkg[pkg]?.label
     fun order(pkg: String): Int = all.indexOfFirst { it.pkg == pkg }.let { if (it < 0) Int.MAX_VALUE else it }
 }

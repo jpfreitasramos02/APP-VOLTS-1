@@ -74,6 +74,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.TilesOverlay
 import kotlin.coroutines.resume
 
 private sealed interface Load {
@@ -199,6 +200,7 @@ private fun StationsMap(
         MapView(context).apply {
             setTileSource(TileSourceFactory.MAPNIK)
             setMultiTouchControls(true)
+            overlayManager.tilesOverlay.setColorFilter(TilesOverlay.INVERT_COLORS) // mapa escuro
             controller.setZoom(14.5)
             controller.setCenter(GeoPoint(lat, lon))
         }
@@ -233,7 +235,7 @@ private fun StationsMap(
     AndroidView(factory = { map }, modifier = modifier)
 }
 
-private fun dot(context: Context, color: Color, sizeDp: Int): BitmapDrawable {
+internal fun dot(context: Context, color: Color, sizeDp: Int): BitmapDrawable {
     val px = (sizeDp * context.resources.displayMetrics.density).toInt()
     val bmp = Bitmap.createBitmap(px, px, Bitmap.Config.ARGB_8888)
     val c = Canvas(bmp)
