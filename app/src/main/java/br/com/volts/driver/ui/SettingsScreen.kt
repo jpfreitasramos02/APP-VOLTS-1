@@ -135,7 +135,7 @@ private fun Section(title: String, content: @Composable () -> Unit) {
         Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colorScheme.surfaceContainer).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        Text(title.uppercase(), style = TechLabel, color = MaterialTheme.colorScheme.primary)
         content()
     }
 }

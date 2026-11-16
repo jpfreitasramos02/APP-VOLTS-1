@@ -112,9 +112,9 @@ private class AppStats(val pkg: String, val count: Int, val totalCents: Long, va
 @Composable
 private fun HeaderRow() {
     Row {
-        Text("App", Modifier.weight(1.4f), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("APP", Modifier.weight(1.4f), style = TechLabel, color = MaterialTheme.colorScheme.onSurfaceVariant)
         listOf("Ofertas", "Valor médio", "Média por km", "Total ofertado").forEach {
-            Text(it, Modifier.weight(1f), textAlign = TextAlign.End, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(it.uppercase(), Modifier.weight(1f), textAlign = TextAlign.End, style = TechLabel, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -127,7 +127,7 @@ private fun androidx.compose.foundation.layout.RowScope.Cell(text: String) {
 @Composable
 private fun Stat(label: String, value: String, unit: String, modifier: Modifier) {
     Column(modifier.clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colorScheme.surfaceContainer).padding(16.dp)) {
-        Text(label, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(label.uppercase(), style = TechLabel, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Row(verticalAlignment = Alignment.Bottom) {
             Text(value, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, maxLines = 1)
             if (unit.isNotEmpty()) Text(" $unit", Modifier.padding(bottom = 4.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)

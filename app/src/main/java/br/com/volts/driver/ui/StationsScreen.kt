@@ -117,7 +117,7 @@ fun StationsScreen() {
             FilterChip(showFuel, { showFuel = !showFuel }, label = { Text("Combustível") },
                 leadingIcon = { Icon(Icons.Filled.LocalGasStation, null, Modifier.size(18.dp), tint = FuelOrange) })
             FilterChip(showEv, { showEv = !showEv }, label = { Text("Elétrico") },
-                leadingIcon = { Icon(Icons.Filled.EvStation, null, Modifier.size(18.dp), tint = EvBlue) })
+                leadingIcon = { Icon(Icons.Filled.EvStation, null, Modifier.size(18.dp), tint = VoltsAzul) })
             IconButton(onClick = { reload++ }) { Icon(Icons.Filled.Refresh, "Atualizar") }
         }
         when (val s = state) {
@@ -156,8 +156,8 @@ private fun Message(text: String, action: @Composable () -> Unit) {
 }
 
 private fun stationColor(s: Station): Color = when {
-    s.isVolts -> VoltsGreen
-    s.type == StationType.EV -> EvBlue
+    s.isVolts -> VoltsAmarelo
+    s.type == StationType.EV -> VoltsAzul
     else -> FuelOrange
 }
 

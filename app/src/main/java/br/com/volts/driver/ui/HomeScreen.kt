@@ -48,12 +48,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.volts.driver.R
 import br.com.volts.driver.apps.AppEntry
 import br.com.volts.driver.apps.Apps
 import br.com.volts.driver.apps.KnownApps
@@ -65,7 +67,7 @@ import br.com.volts.driver.util.formatKm
 import kotlinx.coroutines.delay
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(showLogo: Boolean) {
     val context = LocalContext.current
     val app = app()
     val settings by app.prefs.settings.collectAsStateWithLifecycle()
@@ -86,6 +88,8 @@ fun HomeScreen() {
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        // Em telas largas o símbolo já aparece na barra lateral.
+        if (showLogo) Image(painterResource(R.drawable.volts_logo), "Volts Brasil", Modifier.height(36.dp))
         ShiftCard()
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Seus apps", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))

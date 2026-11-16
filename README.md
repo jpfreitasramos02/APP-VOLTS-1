@@ -51,3 +51,6 @@ O APK sai em `app/build/outputs/apk/debug/app-debug.apk`.
 - `pay` – geração do Pix (BR Code) e QR Code
 - `stations` – busca de postos na Overpass API
 - `data` – banco local (Room) e preferências
+
+A identidade visual (cores, logo e as fontes Sora e IBM Plex Mono, ambas sob licença SIL OFL 1.1) segue a do site da Volts Brasil;
+os valores ficam em `ui/Theme.kt`.

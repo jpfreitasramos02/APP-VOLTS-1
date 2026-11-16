@@ -102,7 +102,7 @@ class ShiftService : Service(), LocationListener {
         nm.createNotificationChannel(NotificationChannel(CHANNEL, "Turno em andamento", NotificationManager.IMPORTANCE_LOW))
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
         return NotificationCompat.Builder(this, CHANNEL)
-            .setSmallIcon(R.drawable.ic_bolt)
+            .setSmallIcon(R.drawable.ic_volts_v)
             .setContentTitle("Turno em andamento")
             .setContentText("Medindo a distância percorrida")
             .setOngoing(true)

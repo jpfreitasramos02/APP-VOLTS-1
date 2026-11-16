@@ -1,5 +1,6 @@
 package br.com.volts.driver.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Dashboard
@@ -21,37 +23,18 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import br.com.volts.driver.R
 import br.com.volts.driver.VoltsApp
-
-val VoltsGreen = Color(0xFFB8F53D)
-val FuelOrange = Color(0xFFFFA940)
-val EvBlue = Color(0xFF4FC3F7)
-
-private val Colors = darkColorScheme(
-    primary = VoltsGreen,
-    onPrimary = Color(0xFF10140A),
-    primaryContainer = Color(0xFF2C3A12),
-    onPrimaryContainer = VoltsGreen,
-    secondary = EvBlue,
-    background = Color(0xFF0E1116),
-    surface = Color(0xFF0E1116),
-    surfaceVariant = Color(0xFF1B2029),
-    surfaceContainer = Color(0xFF161A21),
-    surfaceContainerHigh = Color(0xFF1B2029),
-    surfaceContainerHighest = Color(0xFF232935),
-    onSurfaceVariant = Color(0xFFA9B1BF),
-)
 
 private class Tab(val label: String, val icon: ImageVector)
 
@@ -68,13 +51,13 @@ fun app(): VoltsApp = LocalContext.current.applicationContext as VoltsApp
 
 @Composable
 fun VoltsRoot() {
-    MaterialTheme(colorScheme = Colors) {
+    VoltsTheme {
         Surface(Modifier.fillMaxSize()) {
             var tab by rememberSaveable { mutableIntStateOf(0) }
-            val content: @Composable (Modifier) -> Unit = { m ->
+            val content: @Composable (Modifier, Boolean) -> Unit = { m, wide ->
                 Box(m.padding(16.dp)) {
                     when (tab) {
-                        0 -> HomeScreen()
+                        0 -> HomeScreen(showLogo = !wide)
                         1 -> StationsScreen()
                         2 -> PayScreen(onOpenSettings = { tab = 4 })
                         3 -> ReportScreen()
@@ -85,7 +68,11 @@ fun VoltsRoot() {
             BoxWithConstraints(Modifier.safeDrawingPadding()) {
                 if (maxWidth >= 600.dp) {
                     Row {
-                        NavigationRail {
+                        NavigationRail(
+                            header = {
+                                Image(painterResource(R.drawable.volts_simbolo), "Volts Brasil", Modifier.padding(vertical = 12.dp).size(40.dp))
+                            },
+                        ) {
                             tabs.forEachIndexed { i, t ->
                                 NavigationRailItem(
                                     selected = tab == i,
@@ -96,11 +83,11 @@ fun VoltsRoot() {
                                 )
                             }
                         }
-                        content(Modifier.weight(1f))
+                        content(Modifier.weight(1f), true)
                     }
                 } else {
                     Column {
-                        content(Modifier.weight(1f))
+                        content(Modifier.weight(1f), false)
                         NavigationBar {
                             tabs.forEachIndexed { i, t ->
                                 NavigationBarItem(
